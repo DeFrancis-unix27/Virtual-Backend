@@ -7,6 +7,6 @@ from .models import ContactMessage
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'email')
     list_filter = ("name",)
-    search_fields = ['name', 'created_on']
+    search_fields = ['name', 'email']
     
     

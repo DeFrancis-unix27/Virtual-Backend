@@ -13,11 +13,12 @@ class ContactMessageCreateView(generics.CreateAPIView):
         instance = serializer.save()
 
     # Always send to admin
+        admin_email = getattr(settings, 'CONTACT_RECIPIENT_EMAIL', settings.EMAIL_HOST_USER)
         send_mail(
             subject=f"New Contact from {instance.name}",
             message=f"Message from: {instance.email}\n\n{instance.message}",
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=["your_email@example.com"],
+            recipient_list=[admin_email],
             fail_silently=False,
         )
 

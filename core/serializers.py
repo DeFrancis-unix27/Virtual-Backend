@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Home, About, Service, Testimonails
+from .models import Home, About, Service, Testimonails, Gallery
 
 
 class AbsoluteURLMixin:
@@ -46,3 +46,15 @@ class TestimonialSerializer(serializers.ModelSerializer, AbsoluteURLMixin):
     def get_avatar(self, obj):
         request = self.context.get("request")
         return self.get_absolute_image_url(request, obj.avatar)
+
+
+class GallerySerializer(serializers.ModelSerializer, AbsoluteURLMixin):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Gallery
+        fields = "__all__"
+
+    def get_image(self, obj):
+        request = self.context.get("request")
+        return self.get_absolute_image_url(request, obj.image)

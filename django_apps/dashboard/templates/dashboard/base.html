@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Portal{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-width: 250px;
+      --primary-dark: #0f0f1a;
+      --sidebar-bg: #1a1a2e;
+      --card-bg: #16213e;
+      --accent: #e94560;
+      --accent-hover: #ff6b81;
+      --text-primary: #eaeaea;
+      --text-muted: #8a8aa0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      padding: 1.5rem 0;
+      overflow-y: auto;
+      z-index: 100;
+      border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .sidebar-brand {
+      padding: 0 1.5rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 1rem;
+    }
+    .sidebar-brand small {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    .sidebar .nav-link {
+      color: var(--text-muted);
+      padding: 0.65rem 1.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+    .sidebar .nav-link:hover,
+    .sidebar .nav-link.active {
+      color: #fff;
+      background: rgba(233, 69, 96, 0.08);
+      border-left-color: var(--accent);
+    }
+    .sidebar .nav-link i { font-size: 1.1rem; width: 20px; text-align: center; }
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      transition: transform 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); }
+    .stat-card .number {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .table-custom {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .table-custom thead th {
+      background: rgba(255,255,255,0.03);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 0.75rem 1rem;
+    }
+    .table-custom tbody td {
+      padding: 0.75rem 1rem;
+      border-color: rgba(255,255,255,0.05);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      vertical-align: middle;
+    }
+    .table-custom tbody tr:hover { background: rgba(255,255,255,0.03); }
+    .btn-accent {
+      background: var(--accent);
+      border: none;
+      color: #fff;
+      padding: 0.4rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .btn-accent:hover { background: var(--accent-hover); color: #fff; }
+    .btn-outline-accent {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.4rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-outline-accent:hover { background: var(--accent); color: #fff; }
+    .dashboard-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .form-control, .form-select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+    }
+    .form-control:focus, .form-select:focus {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: none;
+    }
+    .form-control::placeholder { color: var(--text-muted); }
+    .form-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .alert-custom {
+      background: rgba(233, 69, 96, 0.1);
+      border: 1px solid rgba(233, 69, 96, 0.2);
+      color: var(--accent);
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .alert-success-custom {
+      background: rgba(40, 167, 69, 0.1);
+      border: 1px solid rgba(40, 167, 69, 0.2);
+      color: #28a745;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-dark);
+    }
+    .login-box {
+      background: var(--card-bg);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-box h2 {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .login-box p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    .badge-status {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--sidebar-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+  </style>
+</head>
+<body>
+  {% if user.is_authenticated %}
+  <nav class="sidebar">
+    <div class="sidebar-brand">
+      Portal
+      <small>Content Manager</small>
+    </div>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-home' %}active{% endif %}" href="{% url 'dashboard-home' %}">
+      <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-home-edit' %}active{% endif %}" href="{% url 'dashboard-home-edit' %}">
+      <i class="bi bi-house"></i> Home
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-about-edit' %}active{% endif %}" href="{% url 'dashboard-about-edit' %}">
+      <i class="bi bi-person"></i> About
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-services' %}active{% endif %}" href="{% url 'dashboard-services' %}">
+      <i class="bi bi-gear"></i> Services
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-testimonials' %}active{% endif %}" href="{% url 'dashboard-testimonials' %}">
+      <i class="bi bi-chat-quote"></i> Testimonials
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-blog' %}active{% endif %}" href="{% url 'dashboard-blog' %}">
+      <i class="bi bi-journal-text"></i> Blog
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-projects' %}active{% endif %}" href="{% url 'dashboard-projects' %}">
+      <i class="bi bi-folder"></i> Projects
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-gallery' %}active{% endif %}" href="{% url 'dashboard-gallery' %}">
+      <i class="bi bi-images"></i> Gallery
+    </a>
+    <a class="nav-link {% if request.resolver_match.url_name == 'dashboard-messages' %}active{% endif %}" href="{% url 'dashboard-messages' %}">
+      <i class="bi bi-envelope"></i> Messages
+    </a>
+    <hr style="border-color: rgba(255,255,255,0.05); margin: 1rem 1.5rem;">
+    <a class="nav-link" href="{% url 'dashboard-logout' %}">
+      <i class="bi bi-box-arrow-left"></i> Logout
+    </a>
+  </nav>
+  {% endif %}
+
+  <div class="main-content">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'error' %}alert-custom{% else %}alert-success-custom{% endif %} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

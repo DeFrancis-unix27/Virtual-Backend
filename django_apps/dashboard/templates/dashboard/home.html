@@ -1,0 +1,62 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="mb-0" style="font-weight: 700;">Dashboard</h3>
+  <small style="color: var(--text-muted);">Content overview</small>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ home_count }}</div><div class="label">Home</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ about_count }}</div><div class="label">About</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ service_count }}</div><div class="label">Services</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ testimonial_count }}</div><div class="label">Testimonials</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ blog_count }}</div><div class="label">Blog Posts</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ project_count }}</div><div class="label">Projects</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ gallery_count }}</div><div class="label">Gallery</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ certificate_count }}</div><div class="label">Certificates</div></div>
+  </div>
+  <div class="col-6 col-md-4 col-lg-3">
+    <div class="stat-card"><div class="number">{{ message_count }}</div><div class="label">Messages</div></div>
+  </div>
+</div>
+
+<div class="dashboard-card">
+  <h5 class="mb-3" style="font-weight: 600;">Recent Messages</h5>
+  {% if recent_messages %}
+  <div class="table-responsive">
+    <table class="table table-custom mb-0">
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Date</th></tr>
+      </thead>
+      <tbody>
+        {% for msg in recent_messages %}
+        <tr>
+          <td>{{ msg.name }}</td>
+          <td style="color: var(--text-muted);">{{ msg.email }}</td>
+          <td style="color: var(--text-muted); font-size: 0.8rem;">{{ msg.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p style="color: var(--text-muted); font-size: 0.9rem;">No messages yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

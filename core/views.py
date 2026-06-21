@@ -1,14 +1,15 @@
 from rest_framework.views import APIView
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Home, About, Service, Testimonails
+from .models import Home, About, Service, Testimonails, Gallery
 from django.http import JsonResponse
 from .serializers import (
     HomeSerializer,
     AboutSerializer,
     ServicesSerializer,
     TestimonialSerializer,
+    GallerySerializer,
 )
 
 
@@ -40,6 +41,10 @@ class ServicesAPI(APIView):
 
 
 class TestimonialsAPI(viewsets.ModelViewSet):
-    queryset = Testimonails.objects.all().order_by("-created_at")[:10]
+    queryset = Testimonails.objects.all().order_by("-created_at")
     serializer_class = TestimonialSerializer
-# views.py
+
+
+class GalleryListAPI(generics.ListCreateAPIView):
+    queryset = Gallery.objects.all().order_by("-created_at")
+    serializer_class = GallerySerializer

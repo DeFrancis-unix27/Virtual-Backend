@@ -7,13 +7,13 @@ from .models import Home, About,Testimonails,Service
 class HomeAdmin(admin.ModelAdmin):
     list_display = ('title', 'subtitle')
     list_filter = ("title",)
-    search_fields = ['title', 'created_on']
+    search_fields = ['title']
     
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
     list_display = ('heading',)
     list_filter = ("heading",)
-    search_fields = ['heading', 'created_on']
+    search_fields = ['heading']
     
 @admin.register(Testimonails)
 class TestimonailsAdmin(admin.ModelAdmin):
@@ -24,4 +24,9 @@ class TestimonailsAdmin(admin.ModelAdmin):
 class ServicesAdmin(admin.ModelAdmin):
     list_display = ('title', 'description')
     list_filter = ("title",)
-    search_fields = ['name', 'created_on']
+    search_fields = ['title']
+
+@admin.register(Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
+    search_fields = ['title', 'description']

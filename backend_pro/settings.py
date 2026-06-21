@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "cloudinary_storage",
     "corsheaders",
     "core",
+    "django_apps.dashboard",
     "django_apps.blog",
     "django_apps.contact",
     "django_apps.projects",
@@ -86,7 +87,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'backend_pro.urls'
 
 
-MIDDLEWARE.insert(0, "corsheaders.middleware.CorsMiddleware")
 CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
@@ -220,6 +220,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+LOGIN_URL = "/dashboard/"
+
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
@@ -236,6 +238,7 @@ EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
+CONTACT_RECIPIENT_EMAIL = env("CONTACT_RECIPIENT_EMAIL", default=EMAIL_HOST_USER)
 
 ENGINE = "django.db.backends.sqlite3"
 NAME = BASE_DIR / "db.sqlite3"
