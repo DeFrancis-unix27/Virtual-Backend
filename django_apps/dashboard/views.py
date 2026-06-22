@@ -219,6 +219,7 @@ def dashboard_gallery(request):
     if request.method == "POST":
         Gallery.objects.create(
             title=request.POST.get("title"),
+            image=request.FILES.get("image"),
             description=request.POST.get("description", ""),
         )
         messages.success(request, "Gallery item added.")
