@@ -29,10 +29,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("favicon.ico", RedirectView.as_view(url="/static/favicon.ico")),
     path("", include("core.urls")),
-    path("blogs/", include("django_apps.blog.urls")),
-    path("contact/", include("django_apps.contact.urls")),
-    path("projects/", include("django_apps.projects.urls")),
-    path("csrf/", get_csrf_token, name="csrf_token"),
+    path("api/blogs/", include("django_apps.blog.urls")),
+    path("api/contact/", include("django_apps.contact.urls")),
+    path("api/projects/", include("django_apps.projects.urls")),
+    path("api/csrf/", get_csrf_token, name="csrf_token"),
     path("dashboard/", include("django_apps.dashboard.urls")),
 ]
 

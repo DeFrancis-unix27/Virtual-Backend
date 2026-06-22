@@ -17,12 +17,12 @@ testimonial_detail = TestimonialsAPI.as_view({
 
 urlpatterns = [
     path("", views.root_view),
-    path("home/", views.HomeAPI.as_view(), name="home"),
-    path("about/", views.AboutAPI.as_view(), name="about"),
-    path("services/", views.ServicesAPI.as_view(), name="services"),
-    path("testimonials/", testimonial_list, name="testimonials-list"),
-    path("testimonials/<int:pk>/", testimonial_detail, name="testimonials-detail"),
-    path("gallery/", views.GalleryListAPI.as_view(), name="gallery-list"),
+    path("api/home/", views.HomeAPI.as_view(), name="home"),
+    path("api/about/", views.AboutAPI.as_view(), name="about"),
+    path("api/services/", views.ServicesAPI.as_view(), name="services"),
+    path("api/testimonials/", testimonial_list, name="testimonials-list"),
+    path("api/testimonials/<int:pk>/", testimonial_detail, name="testimonials-detail"),
+    path("api/gallery/", views.GalleryListAPI.as_view(), name="gallery-list"),
 ]
 
 if settings.DEBUG:
