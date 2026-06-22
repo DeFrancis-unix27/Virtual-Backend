@@ -3,7 +3,7 @@
 {% block content %}
 <div class="login-wrapper">
   <div class="login-box">
-    <h2>Welcome back</h2>
+    <div class="login-brand">Portal</div>
     <p>Sign in to manage your content</p>
     <form method="POST">
       {% csrf_token %}
@@ -15,7 +15,7 @@
         <label class="form-label">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Enter password" required>
       </div>
-      <button type="submit" class="btn btn-accent w-100">Sign In</button>
+      <button type="submit" class="btn btn-accent w-100 mt-2">Sign In</button>
     </form>
   </div>
 </div>
