@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Home, About,Testimonails,Service
+from .models import Home, About, Testimonails, Service, Gallery
 
 # Register your models here.
 
