@@ -1,11 +1,11 @@
 {% extends "dashboard/base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
-<div class="page-header">
-  <h3>{{ title }}</h3>
-  <div class="subtitle">Update your content</div>
+<div class="page-head">
+  <h2>{{ title }}</h2>
+  <p>Update your content</p>
 </div>
-<div class="dashboard-card" style="max-width: 700px;">
+<div class="card-custom" style="max-width: 640px;">
   <form method="POST">
     {% csrf_token %}
     {% for field in fields %}
@@ -19,8 +19,8 @@
     </div>
     {% endfor %}
     <div class="mt-4 d-flex gap-2">
-      <button type="submit" class="btn btn-accent">Save Changes</button>
-      <a href="{% url 'dashboard-home' %}" class="btn btn-outline-accent">Cancel</a>
+      <button type="submit" class="btn btn-pri">Save Changes</button>
+      <a href="{% url 'dashboard-home' %}" class="btn btn-out">Cancel</a>
     </div>
   </form>
 </div>

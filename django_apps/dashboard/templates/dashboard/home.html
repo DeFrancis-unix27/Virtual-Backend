@@ -1,91 +1,77 @@
 {% extends "dashboard/base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<div class="page-header">
-  <h3>Dashboard</h3>
-  <div class="subtitle">Overview of your content</div>
+<div class="page-head">
+  <h2>Dashboard</h2>
+  <p>Overview of your content</p>
 </div>
 
-<div class="row g-3 mb-4">
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon purple"><i class="bi bi-house"></i></div>
-      <div class="number">{{ home_count }}</div>
-      <div class="label">Home</div>
-    </div>
+<div class="stat-grid">
+  <div class="stat">
+    <div class="stat-icon purple"><i class="bi bi-house"></i></div>
+    <div class="stat-num">{{ home_count }}</div>
+    <div class="stat-label">Home</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon blue"><i class="bi bi-person"></i></div>
-      <div class="number">{{ about_count }}</div>
-      <div class="label">About</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon blue"><i class="bi bi-person"></i></div>
+    <div class="stat-num">{{ about_count }}</div>
+    <div class="stat-label">About</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon orange"><i class="bi bi-gear"></i></div>
-      <div class="number">{{ service_count }}</div>
-      <div class="label">Services</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon orange"><i class="bi bi-gear"></i></div>
+    <div class="stat-num">{{ service_count }}</div>
+    <div class="stat-label">Services</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon pink"><i class="bi bi-chat-quote"></i></div>
-      <div class="number">{{ testimonial_count }}</div>
-      <div class="label">Testimonials</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon pink"><i class="bi bi-chat-quote"></i></div>
+    <div class="stat-num">{{ testimonial_count }}</div>
+    <div class="stat-label">Testimonials</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon teal"><i class="bi bi-journal-text"></i></div>
-      <div class="number">{{ blog_count }}</div>
-      <div class="label">Blog Posts</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon teal"><i class="bi bi-journal-text"></i></div>
+    <div class="stat-num">{{ blog_count }}</div>
+    <div class="stat-label">Blog Posts</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon green"><i class="bi bi-folder"></i></div>
-      <div class="number">{{ project_count }}</div>
-      <div class="label">Projects</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon green"><i class="bi bi-folder"></i></div>
+    <div class="stat-num">{{ project_count }}</div>
+    <div class="stat-label">Projects</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon purple"><i class="bi bi-images"></i></div>
-      <div class="number">{{ gallery_count }}</div>
-      <div class="label">Gallery</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon purple"><i class="bi bi-images"></i></div>
+    <div class="stat-num">{{ gallery_count }}</div>
+    <div class="stat-label">Gallery</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon blue"><i class="bi bi-patch-check"></i></div>
-      <div class="number">{{ certificate_count }}</div>
-      <div class="label">Certificates</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon blue"><i class="bi bi-patch-check"></i></div>
+    <div class="stat-num">{{ certificate_count }}</div>
+    <div class="stat-label">Certificates</div>
   </div>
-  <div class="col-6 col-md-4 col-lg-3">
-    <div class="stat-card">
-      <div class="stat-icon red"><i class="bi bi-envelope"></i></div>
-      <div class="number">{{ message_count }}</div>
-      <div class="label">Messages</div>
-    </div>
+  <div class="stat">
+    <div class="stat-icon red"><i class="bi bi-envelope"></i></div>
+    <div class="stat-num">{{ message_count }}</div>
+    <div class="stat-label">Messages</div>
   </div>
 </div>
 
-<div class="dashboard-card">
-  <h5><i class="bi bi-inbox me-2" style="color: var(--accent-1);"></i>Recent Messages</h5>
+<div class="card-custom">
+  <h5><i class="bi bi-inbox me-2" style="color: var(--accent);"></i>Recent Messages</h5>
   {% if recent_messages %}
   <div class="table-responsive">
-    <table class="table mb-0">
+    <table class="table" style="margin-bottom: 0;">
       <thead>
-        <tr><th style="border: none; padding-left: 0;">Name</th><th style="border: none;">Email</th><th style="border: none;">Date</th></tr>
+        <tr>
+          <th style="padding-left: 0; border-top: none;">Name</th>
+          <th style="padding-left: 0; border-top: none;">Email</th>
+          <th style="padding-left: 0; border-top: none;">Date</th>
+        </tr>
       </thead>
       <tbody>
         {% for msg in recent_messages %}
         <tr>
-          <td style="padding-left: 0; color: var(--text-primary); font-weight: 500;">{{ msg.name }}</td>
-          <td style="color: var(--text-secondary);">{{ msg.email }}</td>
-          <td style="color: var(--text-muted); font-size: 0.8rem;">{{ msg.created_at|date:"M d, Y" }}</td>
+          <td style="padding-left: 0; color: var(--text-main); font-weight: 500;">{{ msg.name }}</td>
+          <td style="padding-left: 0; color: var(--text-dim);">{{ msg.email }}</td>
+          <td style="padding-left: 0; color: var(--text-dark); font-size: 0.8rem;">{{ msg.created_at|date:"M d, Y" }}</td>
         </tr>
         {% endfor %}
       </tbody>
