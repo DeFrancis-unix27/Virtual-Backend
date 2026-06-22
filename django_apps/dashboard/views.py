@@ -60,9 +60,14 @@ def dashboard_home_edit(request):
             instance.title = title
             instance.subtitle = subtitle
             instance.welcome_message = welcome_message
+            if request.FILES.get("hero_image"):
+                instance.hero_image = request.FILES["hero_image"]
             instance.save()
         else:
-            Home.objects.create(title=title, subtitle=subtitle, welcome_message=welcome_message)
+            Home.objects.create(
+                title=title, subtitle=subtitle, welcome_message=welcome_message,
+                hero_image=request.FILES.get("hero_image"),
+            )
         messages.success(request, "Home section updated.")
         return redirect("dashboard-home-edit")
     return render(request, "dashboard/form.html", {
@@ -70,6 +75,7 @@ def dashboard_home_edit(request):
         "fields": [
             {"name": "title", "label": "Title", "value": instance.title if instance else "", "type": "text"},
             {"name": "subtitle", "label": "Subtitle", "value": instance.subtitle if instance else "", "type": "text"},
+            {"name": "hero_image", "label": "Hero Image", "value": "", "type": "file"},
             {"name": "welcome_message", "label": "Welcome Message", "value": instance.welcome_message if instance else "", "type": "textarea"},
         ],
         "action": "dashboard-home-edit",
@@ -87,9 +93,15 @@ def dashboard_about_edit(request):
             instance.heading = heading
             instance.description = description
             instance.tech_stack = [t.strip() for t in tech_stack.split(",") if t.strip()]
+            if request.FILES.get("profile_image"):
+                instance.profile_image = request.FILES["profile_image"]
             instance.save()
         else:
-            About.objects.create(heading=heading, description=description, tech_stack=[t.strip() for t in tech_stack.split(",") if t.strip()])
+            About.objects.create(
+                heading=heading, description=description,
+                tech_stack=[t.strip() for t in tech_stack.split(",") if t.strip()],
+                profile_image=request.FILES.get("profile_image"),
+            )
         messages.success(request, "About section updated.")
         return redirect("dashboard-about-edit")
     return render(request, "dashboard/form.html", {
@@ -97,6 +109,7 @@ def dashboard_about_edit(request):
         "fields": [
             {"name": "heading", "label": "Heading", "value": instance.heading if instance else "", "type": "text"},
             {"name": "description", "label": "Description", "value": instance.description if instance else "", "type": "textarea"},
+            {"name": "profile_image", "label": "Profile Image", "value": "", "type": "file"},
             {"name": "tech_stack", "label": "Tech Stack (comma separated)", "value": ", ".join(instance.tech_stack) if instance and instance.tech_stack else "", "type": "text"},
         ],
         "action": "dashboard-about-edit",
@@ -137,6 +150,7 @@ def dashboard_testimonials(request):
             name=request.POST.get("name"),
             role=request.POST.get("role"),
             testimonial=request.POST.get("testimonial"),
+            avatar=request.FILES.get("avatar"),
         )
         messages.success(request, "Testimonial added.")
         return redirect("dashboard-testimonials")
@@ -164,6 +178,7 @@ def dashboard_blog(request):
             title=request.POST.get("title"),
             content=request.POST.get("content"),
             status=request.POST.get("status", "draft"),
+            image=request.FILES.get("image"),
         )
         messages.success(request, "Blog post added.")
         return redirect("dashboard-blog")
@@ -194,6 +209,7 @@ def dashboard_projects(request):
             live_link=request.POST.get("live_link", ""),
             tech_stack=[t.strip() for t in request.POST.get("tech_stack", "").split(",") if t.strip()],
             state=request.POST.get("state", "not_started"),
+            image=request.FILES.get("image"),
         )
         messages.success(request, "Project added.")
         return redirect("dashboard-projects")
@@ -239,6 +255,34 @@ def dashboard_gallery_delete(request, pk):
     get_object_or_404(Gallery, pk=pk).delete()
     messages.success(request, "Gallery item deleted.")
     return redirect("dashboard-gallery")
+
+
+@login_required
+def dashboard_certificates(request):
+    if request.method == "POST":
+        Certificate.objects.create(
+            name=request.POST.get("name"),
+            issuer=request.POST.get("issuer"),
+            issue_date=request.POST.get("issue_date"),
+            certificate_image=request.FILES.get("certificate_image"),
+        )
+        messages.success(request, "Certificate added.")
+        return redirect("dashboard-certificates")
+    certs = Certificate.objects.all()
+    return render(request, "dashboard/list.html", {
+        "title": "Certificates",
+        "items": certs,
+        "fields": ["name", "issuer", "issue_date"],
+        "delete_url": "dashboard-certificate-delete",
+        "show_add": True,
+    })
+
+
+@login_required
+def dashboard_certificate_delete(request, pk):
+    get_object_or_404(Certificate, pk=pk).delete()
+    messages.success(request, "Certificate deleted.")
+    return redirect("dashboard-certificates")
 
 
 @login_required

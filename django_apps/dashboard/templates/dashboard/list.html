@@ -93,6 +93,10 @@
             <input type="text" name="name" class="form-control" required>
           </div>
           <div class="mb-3">
+            <label class="form-label">Avatar</label>
+            <input type="file" name="avatar" class="form-control" accept="image/*">
+          </div>
+          <div class="mb-3">
             <label class="form-label">Role</label>
             <input type="text" name="role" class="form-control">
           </div>
@@ -104,6 +108,10 @@
           <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
           </div>
           <div class="mb-3">
             <label class="form-label">Content</label>
@@ -120,6 +128,10 @@
           <div class="mb-3">
             <label class="form-label">Title</label>
             <input type="text" name="title" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
           </div>
           <div class="mb-3">
             <label class="form-label">Description</label>
@@ -144,6 +156,23 @@
               <option value="in_progress">In Progress</option>
               <option value="completed">Completed</option>
             </select>
+          </div>
+          {% elif title == "Certificates" %}
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Issuer</label>
+            <input type="text" name="issuer" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Issue Date</label>
+            <input type="date" name="issue_date" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Certificate Image</label>
+            <input type="file" name="certificate_image" class="form-control" accept="image/*">
           </div>
           {% elif title == "Gallery" %}
           <div class="mb-3">

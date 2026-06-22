@@ -372,11 +372,54 @@
     }
     .empty-state p { color: var(--text-dim); font-size: 0.85rem; }
 
+    /* ── TOGGLE BTN ── */
+    .sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 200;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      color: var(--text-main);
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      align-items: center;
+      justify-content: center;
+    }
+    .sidebar-toggle:hover { background: var(--bg-hover); }
+    .sidebar-toggle.open { left: calc(252px + 0.75rem); }
+
+    /* ── SIDEBAR OVERLAY ── */
+    .sidebar-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .main { margin-left: 0; padding: 1.25rem; }
-      .sidebar { transform: translateX(-100%); }
-      .stat-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .sidebar-toggle { display: flex; }
+      .main { margin-left: 0; padding: 1.25rem; padding-top: 3.5rem; }
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-backdrop.open { display: block; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .table-wrap { border-radius: 8px; }
+      .table-wrap td, .table-wrap th { white-space: nowrap; }
+      .modal-dialog { margin: 0.5rem; }
+      .login-box { margin: 1rem; padding: 1.5rem; }
+      .login-page::before { width: 300px; height: 300px; }
+      .page-head h2 { font-size: 1.15rem; }
+      .brand { padding: 1rem 1.25rem; }
     }
 
     /* ── SCROLLBAR ── */
@@ -388,7 +431,9 @@
 <body>
   {% if user.is_authenticated %}
   <div class="app">
-    <nav class="sidebar">
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+    <nav class="sidebar" id="sidebar">
       <div class="brand">
         <div class="brand-name">Portal</div>
         <div class="brand-sub">Content Manager</div>
@@ -418,6 +463,9 @@
       </a>
       <a class="nav-item {% if request.resolver_match.url_name == 'dashboard-gallery' %}active{% endif %}" href="{% url 'dashboard-gallery' %}">
         <i class="bi bi-images"></i> Gallery
+      </a>
+      <a class="nav-item {% if request.resolver_match.url_name == 'dashboard-certificates' %}active{% endif %}" href="{% url 'dashboard-certificates' %}">
+        <i class="bi bi-patch-check"></i> Certificates
       </a>
       <a class="nav-item {% if request.resolver_match.url_name == 'dashboard-messages' %}active{% endif %}" href="{% url 'dashboard-messages' %}">
         <i class="bi bi-envelope"></i> Messages
@@ -450,5 +498,15 @@
   {% endif %}
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      const btn = document.getElementById('sidebarToggle');
+      sidebar.classList.toggle('open');
+      backdrop.classList.toggle('open');
+      btn.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>
