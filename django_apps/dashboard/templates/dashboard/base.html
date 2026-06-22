@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -192,7 +192,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border-line);
       border-radius: 12px;
-      overflow: hidden;
+      overflow-x: auto;
     }
     .table-wrap .table { margin-bottom: 0; }
     .table-wrap th {
@@ -221,7 +221,6 @@
       color: #f87171;
       border-radius: 10px;
       font-size: 0.84rem;
-      padding: 0.6rem 1rem;
     }
     .alert-ok {
       background: rgba(16,185,129,0.06);
@@ -229,7 +228,6 @@
       color: #34d399;
       border-radius: 10px;
       font-size: 0.84rem;
-      padding: 0.6rem 1rem;
     }
 
     /* ── BUTTONS ── */
@@ -242,6 +240,7 @@
       font-size: 0.82rem;
       font-weight: 600;
       transition: all 0.15s;
+      cursor: pointer;
     }
     .btn-pri:hover {
       background: #8b6cff;
@@ -256,6 +255,7 @@
       font-size: 0.82rem;
       font-weight: 500;
       transition: all 0.15s;
+      cursor: pointer;
     }
     .btn-out:hover {
       border-color: rgba(255,255,255,0.15);
@@ -269,6 +269,7 @@
       border-radius: 6px;
       font-size: 0.75rem;
       transition: all 0.15s;
+      cursor: pointer;
     }
     .btn-del:hover {
       background: rgba(239,68,68,0.08);
@@ -291,6 +292,9 @@
       box-shadow: 0 0 0 2px rgba(124,92,252,0.08);
     }
     .form-control::placeholder { color: var(--text-dark); }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%238888a0' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    }
     .form-label {
       font-size: 0.78rem;
       color: var(--text-dim);
@@ -310,18 +314,23 @@
     }
     .modal-body { padding: 1.25rem; }
     .modal-header .modal-title { font-weight: 600; font-size: 1rem; }
-    .btn-close { filter: invert(0.6) brightness(0.9); }
+    .btn-close { opacity: 0.5; }
+    .btn-close:hover { opacity: 0.8; }
+    .modal-backdrop { opacity: 0.3 !important; background: #000 !important; }
 
     /* ── LOGIN (full-page, no sidebar) ── */
     .login-page {
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       background: var(--bg-deep);
       position: relative;
       overflow: hidden;
     }
+    .login-page .alert { width: 100%; max-width: 380px; margin-bottom: 0.75rem; }
+    .login-page > .alert:first-child { margin-top: 0; }
     .login-page::before {
       content: '';
       position: absolute;
@@ -362,6 +371,13 @@
       margin-bottom: 0.75rem;
     }
     .empty-state p { color: var(--text-dim); font-size: 0.85rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .main { margin-left: 0; padding: 1.25rem; }
+      .sidebar { transform: translateX(-100%); }
+      .stat-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+    }
 
     /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
@@ -420,7 +436,7 @@
         {% for message in messages %}
           <div class="alert {% if message.tags == 'error' %}alert-err{% else %}alert-ok{% endif %} alert-dismissible fade show" role="alert">
             {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         {% endfor %}
       {% endif %}

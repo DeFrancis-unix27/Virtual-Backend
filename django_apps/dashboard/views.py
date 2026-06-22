@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 from core.models import Home, About, Service, Testimonails, Gallery
 from django_apps.blog.models import Blog
 from django_apps.contact.models import ContactMessage
@@ -19,7 +20,8 @@ def dashboard_login(request):
         )
         if user and user.is_superuser:
             login(request, user)
-            return redirect("dashboard-home")
+            next_url = request.GET.get("next") or reverse("dashboard-home")
+            return redirect(next_url)
         messages.error(request, "Invalid credentials or not an admin.")
     return render(request, "dashboard/login.html")
 
